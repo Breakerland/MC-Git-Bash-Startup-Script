@@ -14,7 +14,7 @@ source secret.key
 
 # Pull from Github
 git reset --hard
-git pull
+git pull --recurse-submodules
 
 # Deobfuscate variables
 echo "Starting to deobfuscate files..."
