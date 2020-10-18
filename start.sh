@@ -11,31 +11,6 @@ JAR_FILE='server.jar'
 DEOBFUSCATE=1
 
 #------------------
-# Pull from Github
-#------------------
-if [[ $AUTO_UPDATE == 1 ]]; then
-	git reset --hard
-	git pull --recurse-submodules
-	git submodule update --init --recursive --force
-fi
-
-#------------------
-# Deobfuscation
-#------------------
-if [[ $DEOBFUSCATE == 1 ]]; then
-	echo "Starting to deobfuscate files..."
-	shopt -s nullglob
-	for i in server.properties spigot.yml bukkit.yml config.yml waterfall.yml plugins/*/*.yml plugins/*/*.key plugins/*/*.txt plugins/BreakerLandMenu/menus/*.menu;
-	do
-		for key in "${!secret_key[@]}"
-		do 
-		  sed -i "s|$key|${secret_key[$key]}|g" $i
-		done
-	done
-	echo "Deobfuscation complete."
-fi
-
-#------------------
 # Begin Switches
 #------------------
 while [ "$#" -gt 0 ];
@@ -117,6 +92,31 @@ do
 
   shift
 done
+
+#------------------
+# Pull from Github
+#------------------
+if [[ $AUTO_UPDATE == 1 ]]; then
+	git reset --hard
+	git pull --recurse-submodules
+	git submodule update --init --recursive --force
+fi
+
+#------------------
+# Deobfuscation
+#------------------
+if [[ $DEOBFUSCATE == 1 ]]; then
+	echo "Starting to deobfuscate files..."
+	shopt -s nullglob
+	for i in server.properties spigot.yml bukkit.yml config.yml waterfall.yml plugins/*/*.yml plugins/*/*.key plugins/*/*.txt plugins/BreakerLandMenu/menus/*.menu;
+	do
+		for key in "${!secret_key[@]}"
+		do 
+		  sed -i "s|$key|${secret_key[$key]}|g" $i
+		done
+	done
+	echo "Deobfuscation complete."
+fi
 
 #------------------
 # Reset end dimension
