@@ -6,6 +6,7 @@ source secret.key
 
 ENDER_RESET_TIME='0'
 AUTO_UPDATE=1
+AUTO_UPDATE_PLUGIN=1
 HEAPSIZE=1024
 JAR_FILE='server.jar'
 DEOBFUSCATE=1
@@ -57,6 +58,16 @@ do
       shift
       else
         echo "Error in -au|--auto-update syntax. Script failed."
+        exit 1
+      fi
+      ;;
+
+    -aup|--auto-update-plugin)
+      if [[ "$#" -gt 1 && ! "$2" = \-* ]]; then
+      AUTO_UPDATE_PLUGIN=$2
+      shift
+      else
+        echo "Error in -aup|--auto-update-plugin syntax. Script failed."
         exit 1
       fi
       ;;
@@ -131,8 +142,17 @@ then
 	else
 	  echo "Not time to reset end dimension."
 	fi
-else
-	echo ""
+fi
+
+#------------------
+# Update plugins
+#------------------
+if [[ $AUTO_UPDATE_PLUGIN > 0 ]];
+then
+	for i in $(awk '/\|/ {print $2}' plugin.md)
+	do
+		find /home/plugins/ -iname '*'$i'*.jar' -exec cp "{}" plugins  \;
+	done
 fi
 
 #------------------
