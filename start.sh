@@ -121,7 +121,7 @@ fi
 #------------------
 # Reset end dimension
 #------------------
-if [ $ENDER_RESET_TIME > 0 && $(find . -name '*_the_end') ];
+if [[ $ENDER_RESET_TIME > 0 && $(find . -name '*_the_end') ]];
 then
 	ENDER_DIR=$(find . -type d -name "*_the_end" | wc -l)
 	ENDER_REGION_DIR=''$ENDER_DIR'/DIM1/region'
