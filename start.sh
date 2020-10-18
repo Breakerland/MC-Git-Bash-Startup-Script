@@ -144,7 +144,7 @@ G1HeapRegionSize=16
 G1ReservePercent=15
 InitiatingHeapOccupancyPercent=20
 
-if (($1 < 12000))
+if (($HEAPSIZE < 12000))
 then
    G1NewSizePercent=30
    G1MaxNewSizePercent=40
