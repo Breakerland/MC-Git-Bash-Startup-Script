@@ -5,8 +5,8 @@
 source secret.key
 
 ENDER_RESET_TIME='0'
-AUTO_UPDATE=1
-AUTO_UPDATE_PLUGIN=1
+UPDATE_SERVER=1
+UPDATE_PLUGIN=1
 HEAPSIZE=1024
 JAR_FILE='server.jar'
 DEOBFUSCATE=1
@@ -52,22 +52,22 @@ do
       fi
       ;;
 
-    -au|--auto-update)
+    -us|--update-server)
       if [[ "$#" -gt 1 && ! "$2" = \-* ]]; then
-      AUTO_UPDATE=$2
+      UPDATE_SERVER=$2
       shift
       else
-        echo "Error in -au|--auto-update syntax. Script failed."
+        echo "Error in -us|--update-server syntax. Script failed."
         exit 1
       fi
       ;;
 
-    -aup|--auto-update-plugin)
+    -up|--update-plugin)
       if [[ "$#" -gt 1 && ! "$2" = \-* ]]; then
-      AUTO_UPDATE_PLUGIN=$2
+      UPDATE_PLUGIN=$2
       shift
       else
-        echo "Error in -aup|--auto-update-plugin syntax. Script failed."
+        echo "Error in -up|--update-plugin syntax. Script failed."
         exit 1
       fi
       ;;
@@ -82,7 +82,7 @@ do
       fi
       ;;
 
-    --)              # End of all options.
+    --) # End of all options.
         shift
         break
         ;;
@@ -107,7 +107,7 @@ done
 #------------------
 # Pull from Github
 #------------------
-if [[ $AUTO_UPDATE == 1 ]]; then
+if [[ $UPDATE_SERVER == 1 ]]; then
 	git reset --hard
 	git pull --recurse-submodules
 	git submodule update --init --recursive --force
@@ -147,7 +147,7 @@ fi
 #------------------
 # Update plugins
 #------------------
-if [[ $AUTO_UPDATE_PLUGIN > 0 ]];
+if [[ $UPDATE_PLUGIN > 0 ]];
 then
 	for i in $(awk '/\|/ {print $2}' plugin.md)
 	do
