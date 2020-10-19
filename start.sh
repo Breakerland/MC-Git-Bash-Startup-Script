@@ -159,9 +159,10 @@ fi
 #------------------
 if [[ $UPDATE_PLUGIN > 0 ]];
 then
+    rm 'plugins/*.jar'
 	for i in $(awk '/\|/ {print $2}' plugin.md)
 	do
-		find /home/plugins/ -iname '*'$i'*.jar' -exec cp "{}" plugins  \;
+		find /home/plugins/ -iname '*'$i'[\-.]*jar' -exec cp "{}" plugins  \;
 	done
 fi
 
