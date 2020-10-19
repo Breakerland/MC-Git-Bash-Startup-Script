@@ -129,7 +129,7 @@ fi
 if [[ $DEOBFUSCATE == 1 ]]; then
 	echo "Starting to deobfuscate files..."
 	shopt -s nullglob
-	for i in server.properties spigot.yml bukkit.yml config.yml waterfall.yml plugins/*/*.yml plugins/*/*.key plugins/*/*.txt plugins/BreakerLandMenu/menus/*.menu;
+	for i in server.properties spigot.yml bukkit.yml config.yml waterfall.yml plugins/*/*.yml plugins/*/*.conf plugins/*/*.key plugins/*/*.txt plugins/BreakerLandMenu/menus/*.menu;
 	do
 		for key in "${!secret_key[@]}"
 		do 
