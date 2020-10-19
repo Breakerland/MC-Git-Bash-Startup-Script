@@ -32,9 +32,19 @@ do
       fi
       ;;
 
-    -hs|--heap-size)
+	-xms|--min-heap-size)
       if [[ "$#" -gt 1 && ! "$2" = \-* ]]; then
-      HEAPSIZE=$2
+      MIN_HEAP_SIZE=$2
+      shift
+      else
+        echo "Error in -hs|--heap-size syntax. Script failed."
+        exit 1
+      fi
+      ;;
+
+    -xmx|--max-heap-size)
+      if [[ "$#" -gt 1 && ! "$2" = \-* ]]; then
+      MAX_HEAP_SIZE=$2
       shift
       else
         echo "Error in -hs|--heap-size syntax. Script failed."
@@ -164,7 +174,7 @@ G1HeapRegionSize=16
 G1ReservePercent=15
 InitiatingHeapOccupancyPercent=20
 
-if (($HEAPSIZE < 12000))
+if (($MAX_HEAP_SIZE < 12000))
 then
    G1NewSizePercent=30
    G1MaxNewSizePercent=40
@@ -177,4 +187,4 @@ fi
 # Java startup
 #------------------
 echo "Starting server..."
-java -Xms${HEAPSIZE}M -Xmx${HEAPSIZE}M -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=${G1NewSizePercent} -XX:G1MaxNewSizePercent=${G1MaxNewSizePercent} -XX:G1HeapRegionSize=${G1HeapRegionSize}M -XX:G1ReservePercent=${G1ReservePercent} -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=${InitiatingHeapOccupancyPercent} -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -Dterminal.jline=false -Dterminal.ansi=true -Dfile.encoding=UTF-8 -Dcom.mojang.eula.agree=true -jar $JAR_FILE nogui
+java -Xms${MIN_HEAP_SIZE}M -Xmx${MAX_HEAP_SIZE}M -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=${G1NewSizePercent} -XX:G1MaxNewSizePercent=${G1MaxNewSizePercent} -XX:G1HeapRegionSize=${G1HeapRegionSize}M -XX:G1ReservePercent=${G1ReservePercent} -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=${InitiatingHeapOccupancyPercent} -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -Dterminal.jline=false -Dterminal.ansi=true -Dfile.encoding=UTF-8 -Dcom.mojang.eula.agree=true -jar $JAR_FILE nogui
