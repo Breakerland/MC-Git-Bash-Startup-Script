@@ -2,7 +2,7 @@
 # Obfuscation script to pull from Github and replace $variables
 
 # Declare variables
-source secret.key
+source /home/config/secret.key
 
 ENDER_RESET_TIME='0'
 UPDATE_SERVER=1
