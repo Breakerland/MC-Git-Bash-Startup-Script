@@ -128,7 +128,7 @@ fi
 #------------------
 if [[ $DEOBFUSCATE == 1 ]]; then
 	echo "Starting to deobfuscate files..."
-	for i in $(find . -regextype posix-basic -regex '.*/.\{1,12\}.\(yml\|txt\|menu\|properties\|key\|conf\)');
+	for i in $(find . -regextype posix-basic -regex '.*/.\{1,13\}.\(yml\|txt\|menu\|properties\|key\|conf\)');
 	do
 		for key in "${!secret_key[@]}"
 		do
