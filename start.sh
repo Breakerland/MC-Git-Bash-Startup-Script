@@ -52,6 +52,16 @@ do
       fi
       ;;
 
+    -n|--name)
+      if [[ "$#" -gt 1 && ! "$2" = \-* ]]; then
+      SERVER_NAME=$2
+      shift
+      else
+        echo "Error in -n|--name syntax. Script failed."
+        exit 1
+      fi
+      ;;
+
     -jf|--jar-file)
       if [[ "$#" -gt 1 && ! "$2" = \-* ]]; then
       JAR_FILE=$2
@@ -115,6 +125,15 @@ do
 done
 
 #------------------
+# DEFINE SERVER NAME
+#------------------
+SERVER_NAME=${secret_key['$server_name_'$SERVER_NAME]}
+if [ -z "$SERVER_NAME" ]; then
+	echo "Please set a correct server name using --name"
+	exit 1
+fi
+
+#------------------
 # Pull from Github
 #------------------
 if [[ $UPDATE_SERVER == 1 ]]; then
@@ -130,6 +149,7 @@ if [[ $DEOBFUSCATE == 1 ]]; then
 	echo "Starting to deobfuscate files..."
 	for i in $(find . -regextype posix-basic -regex '.*/.\{1,13\}.\(yml\|txt\|menu\|properties\|key\|conf\|php\)');
 	do
+		sed -i "s|'$server_name'|$SERVER_NAME|g" $i
 		for key in "${!secret_key[@]}"
 		do
 		  sed -i "s|$key|${secret_key[$key]}|g" $i
