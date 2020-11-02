@@ -149,10 +149,10 @@ if [[ $DEOBFUSCATE == 1 ]]; then
 	echo "Starting to deobfuscate files..."
 	for i in $(find . -regextype posix-basic -regex '.*/.\{1,13\}.\(yml\|txt\|menu\|properties\|key\|conf\|php\)');
 	do
-		sed -i "s|\$server_name|$SERVER_NAME|g" $i
+		sed -i "s|\$server_name$|$SERVER_NAME|g" $i
 		for key in "${!secret_key[@]}"
 		do
-		  sed -i "s|$key|${secret_key[$key]}|g" $i
+		  sed -i "s|$key$|${secret_key[$key]}|g" $i
 		done
 	done
 	echo "Deobfuscation complete."
