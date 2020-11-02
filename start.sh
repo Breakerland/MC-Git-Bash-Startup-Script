@@ -152,7 +152,7 @@ if [[ $DEOBFUSCATE == 1 ]]; then
 		sed -i "s|\$server_name$|$SERVER_NAME|g" $i
 		for key in "${!secret_key[@]}"
 		do
-		  sed -i "s|$key$|${secret_key[$key]}|g" $i
+		  sed -i "s|$key|${secret_key[$key]}|g" $i
 		done
 	done
 	echo "Deobfuscation complete."
