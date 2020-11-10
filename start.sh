@@ -181,7 +181,7 @@ then
     rm plugins/*.jar
 	for i in $(awk '/\|/ {print $2}' plugin.md)
 	do
-		find /home/plugins/ -regex '.*/'$i'\([^A-Za-z_]\(.+\)?\)?.jar' -exec cp "{}" plugins  \;
+		find /home/plugins/ -iregex '.*/'$i'\([^A-Za-z_]\(.+\)?\)?.jar' -exec cp "{}" plugins  \;
 	done
 fi
 
