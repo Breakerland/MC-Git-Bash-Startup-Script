@@ -179,7 +179,7 @@ fi
 if [[ $UPDATE_PLUGIN > 0 ]];
 then
     rm plugins/*.jar
-	for i in $(awk '/\|/ {print $2}' plugin.md)
+	for i in $(tail --lines=+3 plugin.md |  awk '/\|/ {print $2}')
 	do
 		find /home/plugins/ -iregex '.*/'$i'\([^A-Za-z_]\(.+\)?\)?.jar' -exec cp "{}" plugins  \;
 	done
